@@ -8,7 +8,7 @@
                     width="50" />
                 <div class="ml-4 text-white">
                     <p class="font-bold" style="color: black;">
-                        Julia Roberts
+                        ADMIN
                     </p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
-                    Brand Manage
+                    <router-link to="/admin/brandmanage" class="text">Brand Manage</router-link>                    
                 </span>
             </a>
             <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">

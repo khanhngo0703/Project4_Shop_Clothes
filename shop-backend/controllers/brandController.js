@@ -29,8 +29,11 @@ export const insertBrand = async (req, res) => {
 };
 
 export const updateBrand = async (req, res) => {
-    const { id } = req.params;
-    await db.Brand.update(req.body, { where: { id } });
+    const { id, name } = req.body; // Lấy `id` từ body
+    if (!id) {
+        return res.status(400).json({ message: "Thiếu ID thương hiệu" });
+    }
+    await db.Brand.update({ name }, { where: { id } });
     return res.status(200).json({ message: "Cập nhật thương hiệu thành công" });
 };
 

@@ -22,10 +22,14 @@ export const insertCategory = async (req, res) => {
 };
 
 export const updateCategory = async (req, res) => {
-    const { id } = req.params;
-    await db.Category.update(req.body, { where: { id } });
+    const { id, name } = req.body; // Lấy `id` từ body
+    if (!id) {
+        return res.status(400).json({ message: "Thiếu ID danh mục" });
+    }
+    await db.Category.update({ name }, { where: { id } });
     return res.status(200).json({ message: "Cập nhật danh mục thành công" });
 };
+
 
 export const deleteCategory = async (req, res) => {
     const { id } = req.params;

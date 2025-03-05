@@ -6,6 +6,7 @@ import * as OrderController from '../controllers/orderController.js';
 import * as OrderDetailController from '../controllers/orderDetailController.js';
 import * as FeedbackController from '../controllers/feedbackController.js';
 import * as BrandController from '../controllers/brandController.js';
+import { uploadMiddleware, uploadImage } from '../controllers/productController.js';
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.delete('/users/Delete/:id', UserController.deleteUser);
 router.get('/categories/GetAll', CategoryController.getCategories);
 router.get('/categories/GetById/:id', CategoryController.getCategoryById);
 router.post('/categories/Create', CategoryController.insertCategory);
-router.put('/categories/Update/:id', CategoryController.updateCategory);
+router.put('/categories/Update', CategoryController.updateCategory);
 router.delete('/categories/Delete/:id', CategoryController.deleteCategory);
 
 // Routes cho Products
@@ -55,7 +56,12 @@ router.delete('/feedbacks/Delete/:id', FeedbackController.deleteFeedback);
 router.get('/brands/GetAll', BrandController.getBrands);
 router.get('/brands/GetById/:id', BrandController.getBrandById);
 router.post('/brands/Create', BrandController.insertBrand);
-router.put('/brands/Update/:id', BrandController.updateBrand);
+router.put('/brands/Update', BrandController.updateBrand);
 router.delete('/brands/Delete/:id', BrandController.deleteBrand);
+
+
+// Route cho Upload Image
+router.post('/products/UploadImage', uploadMiddleware, uploadImage);
+
 
 export default router; // ✅ Xuất mặc định theo ES Module

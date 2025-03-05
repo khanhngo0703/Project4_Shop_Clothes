@@ -27,20 +27,21 @@
                                     <label class="block text-gray-700" for="productName">
                                         Category Name
                                     </label>
-                                    <input class="w-full mt-2 p-2 border border-gray-300 rounded" id="productName"
-                                        name="productName" type="text" />
+                                    <input class="w-full mt-2 p-2 border border-gray-300 rounded" name="categoryName"
+                                        type="text" v-model="currentCategory.name" />
                                 </div>
-                                
+
                                 <div>
                                     <label class="block text-gray-700" for="image">
                                         Image
                                     </label>
-                                    <input class="w-full mt-2 p-2 border border-gray-300 rounded" id="image"
-                                        name="image" type="file" />
-                                </div>                                
+                                    <input class="w-full mt-2 p-2 border border-gray-300 rounded" name="categoryImage"
+                                        type="file" />
+                                </div>
                             </div>
                             <div class="mt-6">
-                                <button class="bg-blue-500 text-white px-4 py-2 rounded" type="submit">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded" type="button"
+                                    @click="onCreateClick()">
                                     Submit
                                 </button>
                             </div>
@@ -52,12 +53,37 @@
     </div>
 </template>
 <script>
+
+import axios from 'axios';
+import router from '../../router.js';
+
 import SidebarComponents from './SidebarComponent.vue';
 
 export default {
     name: 'CreateCategoryComponent',
     components: {
         SidebarComponents
+    },
+    data() {
+        return {
+            currentCategory: {
+                name: "Name",
+            }
+        }
+    },
+    methods: {
+        onCreateClick() {
+            var url = import.meta.env.VITE_APP_BASE_API_URL + `/categories/Create`
+            axios.post(url, this.currentCategory).then((respone) => {
+                console.log(respone.data.data);
+                this.$router.push({ name: 'CategoryManageView' });
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    },
+    mounted() {
+
     }
 }
 </script>

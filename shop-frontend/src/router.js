@@ -10,9 +10,11 @@ import Payment from './view/PaymentView.vue';
 import Showtimes from './view/ShowtimesView.vue';
 import DashboardView from './view/admin/DashboardView.vue';
 import CategoryManageView from './view/admin/CategoryManageView.vue';
+import BrandManageView from './view/admin/BrandManageView.vue';
 import ProductManageView from './view/admin/ProductManageView.vue';
 import CreateProductView from './view/admin/CreateProductView.vue';
 import CreateCategoryView from './view/admin/CreateCategoryView.vue';
+import CreateBrandView from './view/admin/CreateBrandView.vue';
 
 
 
@@ -75,6 +77,12 @@ const routes = [
         // meta: { requiresAuth: true }
     },
     {
+        path: '/admin/brandmanage',
+        name: 'BrandManageView',
+        component: BrandManageView,
+        // meta: { requiresAuth: true }
+    },
+    {
         path: '/admin/productmanage',
         name: 'ProductManageView',
         component: ProductManageView,
@@ -90,6 +98,12 @@ const routes = [
         path: '/admin/create_category',
         name: 'CreateCategoryView',
         component: CreateCategoryView,
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/admin/create_brand',
+        name: 'CreateBrandView',
+        component: CreateBrandView,
         // meta: { requiresAuth: true }
     },
 ];
