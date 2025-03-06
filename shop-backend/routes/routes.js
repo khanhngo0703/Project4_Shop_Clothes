@@ -6,6 +6,7 @@ import * as OrderController from '../controllers/orderController.js';
 import * as OrderDetailController from '../controllers/orderDetailController.js';
 import * as FeedbackController from '../controllers/feedbackController.js';
 import * as BrandController from '../controllers/brandController.js';
+import * as AuthController from '../controllers/authController.js';
 import { uploadMiddleware, uploadImage } from '../controllers/productController.js';
 
 const router = express.Router();
@@ -28,7 +29,7 @@ router.delete('/categories/Delete/:id', CategoryController.deleteCategory);
 router.get('/products/GetAll', ProductController.getProducts);
 router.get('/products/GetById/:id', ProductController.getProductById);
 router.post('/products/Create', ProductController.insertProduct);
-router.put('/products/Update/:id', ProductController.updateProduct);
+router.put('/products/Update', ProductController.updateProduct);
 router.delete('/products/Delete/:id', ProductController.deleteProduct);
 
 // Routes cho Orders
@@ -62,6 +63,9 @@ router.delete('/brands/Delete/:id', BrandController.deleteBrand);
 
 // Route cho Upload Image
 router.post('/products/UploadImage', uploadMiddleware, uploadImage);
+
+router.post('/register', AuthController.register);
+router.post('/login', AuthController.login);
 
 
 export default router; // ✅ Xuất mặc định theo ES Module

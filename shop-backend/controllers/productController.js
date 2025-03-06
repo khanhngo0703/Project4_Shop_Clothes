@@ -54,11 +54,22 @@ export const insertProduct = async (req, res) => {
     return res.status(201).json({ message: "Thêm sản phẩm thành công", data: product });
 };
 
+// export const updateProduct = async (req, res) => {
+//     const { id } = req.params;
+//     await db.Product.update(req.body, { where: { id } });
+//     return res.status(200).json({ message: "Cập nhật sản phẩm thành công" });
+// };
+
 export const updateProduct = async (req, res) => {
-    const { id } = req.params;
-    await db.Product.update(req.body, { where: { id } });
+    const { id, name, price, quantity, category_id, brand_id, image } = req.body; // Lấy `id` từ body
+    if (!id) {
+        return res.status(400).json({ message: "Thiếu ID sản phẩm" });
+    }
+    await db.Product.update({ name, price, quantity, category_id, brand_id, image }, { where: { id } });
     return res.status(200).json({ message: "Cập nhật sản phẩm thành công" });
 };
+
+
 
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;

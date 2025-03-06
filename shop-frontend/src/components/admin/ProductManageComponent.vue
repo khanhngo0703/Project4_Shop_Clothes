@@ -87,10 +87,11 @@
                                         {{ p.brandName }}
                                     </td>
                                     <td class="py-2 px-4 border-b border-gray-200">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2">
+                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2" @click="openUpdateModal(p)">
                                             Update
                                         </button>
-                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded" @click="onDeleteClick(p)">
+                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded"
+                                            @click="onDeleteClick(p)">
                                             Delete
                                         </button>
                                     </td>
@@ -99,6 +100,56 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Update Modal -->
+        <div v-if="showUpdateModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h2 class="text-xl font-bold mb-4">Update Product</h2>
+                <form @submit.prevent="updateProduct">
+                    <label class="block mb-2">Product Name:</label>
+                    <input v-model="currentProduct.name" type="text" class="w-full p-2 border rounded mb-4" />
+
+                    <label class="block mb-2">Price:</label>
+                    <input v-model="currentProduct.price" type="number" class="w-full p-2 border rounded mb-4" />
+
+                    <label class="block mb-2">Quantity:</label>
+                    <input v-model="currentProduct.quantity" type="number" class="w-full p-2 border rounded mb-4" />
+
+                    <label class="block mb-2">Category:</label>
+                    <select v-model="currentProduct.category_id" class="w-full p-2 border rounded mb-4">
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
+
+                    <label class="block mb-2">Brand:</label>
+                    <select v-model="currentProduct.brand_id" class="w-full p-2 border rounded mb-4">
+                        <option v-for="brand in brands" :key="brand.id" :value="brand.id">
+                            {{ brand.name }}
+                        </option>
+                    </select>
+
+                    <!-- Image Upload -->
+                    <label class="block mb-2">Product Image:</label>
+                    <input type="file" @change="onFileChange" class="w-full p-2 border rounded mb-4"
+                        accept="image/*" />
+
+                    <!-- Hiển thị ảnh hiện tại -->
+                    <div v-if="currentProduct.image" class="mb-4">
+                        <img :src="currentProduct.image" alt="Product Image" class="w-full h-32 object-cover rounded">
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+                            @click="closeUpdateModal">
+                            Cancel
+                        </button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+                            Update
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -123,12 +174,13 @@ export default {
             totalItems: 0,
             showUpdateModal: false,
             currentProduct: {
-                productName: "",
-                imageProduct: null,
+                name: "",
+                image: null,
                 price: "",
                 description: "",
-                barCode: "",
-                categoryId: ""
+                quantity: "",
+                category_id: "",
+                brand_id: ""
             },
             categories: [],
             brands: []
@@ -240,11 +292,11 @@ export default {
             this.showUpdateModal = false;
         },
         updateProduct() {
-            var url = process.env.VUE_APP_BASE_API_URL + `/Products/Update`;
+            var url = import.meta.env.VITE_APP_BASE_API_URL + `/products/Update`;
             axios.put(url, this.currentProduct)
                 .then(response => {
                     this.showUpdateModal = false;
-                    this.success();
+                    // this.success();
                     this.loadProductData();
                 })
                 .catch(error => {
@@ -257,13 +309,13 @@ export default {
                 const formData = new FormData();
                 formData.append('image', file);
 
-                axios.post(process.env.VUE_APP_BASE_API_URL + '/Products/UploadImage', formData, {
+                axios.post(import.meta.env.VITE_APP_BASE_API_URL + '/Products/UploadImage', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 })
                     .then(response => {
-                        this.currentProduct.imageProduct = response.data.imageUrl;
+                        this.currentProduct.image = response.data.imageUrl;
                     })
                     .catch(error => {
                         console.log('Error uploading image:', error);

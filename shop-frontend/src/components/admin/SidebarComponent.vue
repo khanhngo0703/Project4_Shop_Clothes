@@ -1,7 +1,7 @@
 <template>
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md">
-        <div class="p-4 bg-cover bg-center" >
+        <div class="p-4 bg-cover bg-center">
             <div class="flex items-center">
                 <img alt="User profile picture" class="w-12 h-12 rounded-full" height="50"
                     src="https://storage.googleapis.com/a1aa/image/0WnRoh0T7zsiOsz_eAzlOBJKZFHzn63jSYGM9YfOfzo.jpg"
@@ -25,21 +25,21 @@
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
-                    <router-link to="/admin/productmanage" class="text">Product Manage</router-link>                    
+                    <router-link to="/admin/productmanage" class="text">Product Manage</router-link>
                 </span>
             </a>
             <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
-                    <router-link to="/admin/categorymanage" class="text">Category Manage</router-link>                    
+                    <router-link to="/admin/categorymanage" class="text">Category Manage</router-link>
                 </span>
             </a>
             <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
-                    <router-link to="/admin/brandmanage" class="text">Brand Manage</router-link>                    
+                    <router-link to="/admin/brandmanage" class="text">Brand Manage</router-link>
                 </span>
             </a>
             <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
@@ -63,6 +63,13 @@
                     Order Manage
                 </span>
             </a>
+            <a class="flex items-center p-4 text-red-600 hover:bg-gray-200" href="#" @click="logout">
+                <i class="fas fa-sign-out-alt w-6">
+                </i>
+                <span class="ml-4">
+                    Logout
+                </span>
+            </a>
         </nav>
     </div>
 </template>
@@ -72,6 +79,12 @@ export default {
     name: 'SidebarComponent',
     components: {
 
+    },
+    methods: {
+        logout() {
+            localStorage.removeItem('adminToken');
+            this.$router.push('/admin/login');
+        }
     }
 }
 </script>

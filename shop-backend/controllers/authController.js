@@ -1,30 +1,40 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import db from "../models/index.js";
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
     const { name, email, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ name, email, password: hashedPassword });
-        res.json(user);
+        const user = await db.User.create({ name, email, password: hashedPassword });
+        return res.status(201).json({ message: "Đăng ký thành công", data: user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 };
 
-exports.login = async (req, res) => {
-    const { email, password } = req.body;
+export const login = async (req, res) => {
+    const { name, password } = req.body;
     try {
-        const user = await User.findOne({ where: { email } });
-        if (!user) return res.status(401).json({ message: 'Tài khoản không tồn tại' });
+        const user = await db.User.findOne({ where: { name } });
+        if (!user) {
+            return res.status(401).json({ message: "Tài khoản không tồn tại" });
+        }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ message: 'Mật khẩu không đúng' });
+        // const isMatch = await bcrypt.compare(password, user.password);
+        // if (!isMatch) {
+        //     return res.status(401).json({ message: "Mật khẩu không đúng" });
+        // }
 
-        const token = jwt.sign({ id: user.id }, 'secretkey', { expiresIn: '1h' });
-        res.json({ token, user });
+        // So sánh mật khẩu trực tiếp (Không dùng bcrypt)
+        if (password !== user.password) {
+            return res.status(401).json({ message: "Mật khẩu không đúng" });
+        }
+
+        const token = jwt.sign({ id: user.id, role: user.role }, "secretkey", { expiresIn: "1h" });
+
+        return res.status(200).json({ message: "Đăng nhập thành công", token, data: user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 };
