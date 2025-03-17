@@ -50,9 +50,9 @@
                         <i class="fas fa-search text-gray-600"></i>
                     </button>
                 </form>
-                <i class="fas fa-shopping-cart text-gray-600 ml-4"></i>
+                <router-link to="/cart"><i class="fas fa-shopping-cart text-gray-600 ml-4"></i></router-link>
                 <span class="bg-red-600 text-white rounded-full px-2 ml-1">
-                    0
+                    {{ cart.length }}
                 </span>
             </div>
         </div>
@@ -94,7 +94,8 @@ export default {
         return {
             categoryData: [],
             searchKeyword: '',
-            username: ''
+            username: '',
+            cart: []
         }
     },
     methods: {
@@ -120,6 +121,11 @@ export default {
     mounted() {
         this.loadCategoryData();
         this.username = localStorage.getItem('username');
+
+        const cartData = localStorage.getItem('cart');
+        if (cartData) {
+            this.cart = JSON.parse(cartData);
+        }
     }
 }
 </script>
