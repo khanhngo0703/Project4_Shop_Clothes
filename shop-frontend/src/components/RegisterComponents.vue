@@ -7,26 +7,26 @@
         <h1 class="text-2xl font-bold mb-2">ĐĂNG KÝ TÀI KHOẢN</h1>
         <hr class="border-t-2 border-orange-500 mb-6">
         <h2 class="text-xl font-semibold mb-4">Thông tin cá nhân</h2>
-        <form class="space-y-4">
+        <form class="space-y-4" @submit.prevent="register">
             <div>
-                <label class="block text-sm font-medium mb-1" for="first-name">Tên *</label>
-                <input type="text" id="first-name" class="w-full border border-gray-300 p-2 rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-medium mb-1" for="last-name">Họ *</label>
-                <input type="text" id="last-name" class="w-full border border-gray-300 p-2 rounded">
+                <label class="block text-sm font-medium mb-1" for="username">Tài khoản *</label>
+                <input v-model="registerForm.name" type="text" id="username"
+                    class="w-full border border-gray-300 p-2 rounded">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1" for="email">Email *</label>
-                <input type="email" id="email" class="w-full border border-gray-300 p-2 rounded">
+                <input v-model="registerForm.email" type="email" id="email"
+                    class="w-full border border-gray-300 p-2 rounded">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1" for="phone">Số điện thoại *</label>
-                <input type="text" id="phone" class="w-full border border-gray-300 p-2 rounded">
+                <input v-model="registerForm.phone" type="text" id="phone"
+                    class="w-full border border-gray-300 p-2 rounded">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1" for="password">Mật khẩu *</label>
-                <input type="password" id="password" class="w-full border border-gray-300 p-2 rounded">
+                <input v-model="registerForm.password" type="password" id="password"
+                    class="w-full border border-gray-300 p-2 rounded">
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit" class="bg-gray-200 text-gray-800 px-4 py-2 rounded">Đăng ký</button>
@@ -49,16 +49,45 @@
     </div>
     <FooterComponents />
 </template>
+
 <script>
+import axios from 'axios';
 import HeaderComponents from './HeaderComponent.vue';
 import FooterComponents from './FooterComponents.vue';
 
-
-
 export default {
     name: 'RegisterComponents',
-    components: {
-        HeaderComponents, FooterComponents
+    props: {
+        msg: String
+    },
+    components: { HeaderComponents, FooterComponents },
+    data() {
+        return {
+            registerForm: {
+                name: '',
+                email: '',
+                phone: '',
+                password: ''
+            }
+        };
+    },
+    methods: {
+        async register() {
+            try {
+                const url = import.meta.env.VITE_APP_BASE_API_URL + `/register`;
+                const response = await axios.post(url, {
+                    name: this.registerForm.name,
+                    email: this.registerForm.email,
+                    phone: this.registerForm.phone,
+                    password: this.registerForm.password,
+                    role: '2' // Thiết lập role = "2"
+                });
+                console.log(response.data);
+                this.$router.push('/login');
+            } catch (error) {
+                console.error('Đăng ký không thành công:', error.response ? error.response.data : error.message);
+            }
+        }
     }
-}
+};
 </script>

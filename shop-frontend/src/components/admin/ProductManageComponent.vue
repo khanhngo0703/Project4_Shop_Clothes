@@ -87,7 +87,8 @@
                                         {{ p.brandName }}
                                     </td>
                                     <td class="py-2 px-4 border-b border-gray-200">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2" @click="openUpdateModal(p)">
+                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                                            @click="openUpdateModal(p)">
                                             Update
                                         </button>
                                         <button type="button" class="bg-red-500 text-white px-2 py-1 rounded"
@@ -98,6 +99,26 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-6 flex justify-center items-center space-x-2">
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="previousPage">
+                                « Previous
+                            </button>
+
+                            <div v-for="page in Math.ceil(totalItems / pageSize)" :key="page">
+                                <button
+                                    class="px-4 py-2 mx-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white"
+                                    @click="changePage(page)">
+                                    {{ page }}
+                                </button>
+                            </div>
+
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="nextPage">
+                                Next »
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -132,8 +153,7 @@
 
                     <!-- Image Upload -->
                     <label class="block mb-2">Product Image:</label>
-                    <input type="file" @change="onFileChange" class="w-full p-2 border rounded mb-4"
-                        accept="image/*" />
+                    <input type="file" @change="onFileChange" class="w-full p-2 border rounded mb-4" accept="image/*" />
 
                     <!-- Hiển thị ảnh hiện tại -->
                     <div v-if="currentProduct.image" class="mb-4">
@@ -168,7 +188,7 @@ export default {
         return {
             productData: [],
             searchKeyword: '',
-            pageSize: 10,
+            pageSize: 8,
             currentPage: 1,
             totalPages: 0,
             totalItems: 0,
@@ -199,7 +219,7 @@ export default {
         loadProductData() {
             var url = import.meta.env.VITE_APP_BASE_API_URL + `/products/GetAll`;
             axios.get(url).then((response) => {
-                this.totalItems = response.data.length;
+                this.totalItems = response.data.data.length;
                 this.totalPages = Math.floor(this.totalItems / this.pageSize);
                 if (this.totalItems % this.pageSize !== 0) {
                     this.totalPages++;

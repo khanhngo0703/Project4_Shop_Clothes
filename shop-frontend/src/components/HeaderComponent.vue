@@ -5,13 +5,19 @@
             <span>
                 Chào mừng bạn đến với Fashion Every Year
             </span>
-            <div>
-                <a class="mr-4" href="#">
+            <span v-if="username">
+                Xin chào, {{ username }}
+                <button @click="logout" class="ml-2">
+                    Đăng xuất
+                </button>
+            </span>
+            <div v-else>
+                <router-link to="/login" class="mr-4">
                     Đăng nhập
-                </a>
-                <a href="#">
+                </router-link>
+                <router-link to="/register">
                     Đăng ký
-                </a>
+                </router-link>
             </div>
         </div>
     </div>
@@ -37,11 +43,14 @@
                 </p>
             </div>
             <div class="flex items-center">
-                <input class="border border-gray-300 rounded px-2 py-1 text-gray-800" placeholder="Tìm kiếm..." type="text" />
-                <i class="fas fa-search text-gray-600 ml-2">
-                </i>
-                <i class="fas fa-shopping-cart text-gray-600 ml-4">
-                </i>
+                <form @submit.prevent="onSearchClick" style="display:inline">
+                    <input class="border border-gray-300 rounded px-2 py-1 text-gray-800" placeholder="Tìm kiếm..."
+                        v-model="searchKeyword">
+                    <button type="submit" class="p-1 bg-gray-200 rounded-md hover:bg-gray-300 transition">
+                        <i class="fas fa-search text-gray-600"></i>
+                    </button>
+                </form>
+                <i class="fas fa-shopping-cart text-gray-600 ml-4"></i>
                 <span class="bg-red-600 text-white rounded-full px-2 ml-1">
                     0
                 </span>
@@ -51,25 +60,16 @@
     <!-- Navigation -->
     <nav class="bg-gray-100 py-2">
         <div class="container mx-auto flex justify-center space-x-8">
-            <a class="text-orange-600 border-b-2 border-orange-600" href="#">
+            <router-link to="/" class="text-orange-600 border-b-2 border-orange-600" href="#">
                 TRANG CHỦ
-            </a>
-            <a class="text-gray-600" href="#">
-                NAM
-                <i class="fas fa-caret-down">
-                </i>
-            </a>
-            <a class="text-gray-600" href="#">
-                NỮ
-                <i class="fas fa-caret-down">
-                </i>
-            </a>
-            <a class="text-gray-600" href="#">
-                PHỤ KIỆN
-            </a>
-            <a class="text-gray-600" href="#">
-                KHUYẾN MẠI
-            </a>
+            </router-link>
+            <li class="text-gray-600 list-none uppercase" href="#" v-for="c in categoryData.slice(0, 6)" :key="c.id">
+                <!-- {{ c.name }} -->
+                <router-link :to="{ name: 'CategoryDetailView', params: { categoryId: c.id } }" data-hover="dropdown"
+                    class="dropdown-toggle" data-toggle="dropdown">
+                    {{ c.name }}
+                </router-link>
+            </li>
             <a class="text-gray-600" href="#">
                 TIN TỨC
             </a>
@@ -82,6 +82,9 @@
 </template>
 <script>
 // import '../assets/js/header';
+
+import axios from 'axios';
+
 export default {
     name: "HeaderHomePage",
     components: {
@@ -89,14 +92,34 @@ export default {
     },
     data() {
         return {
-            
-        };
+            categoryData: [],
+            searchKeyword: '',
+            username: ''
+        }
     },
     methods: {
-        
+        loadCategoryData() {
+            var url = import.meta.env.VITE_APP_BASE_API_URL + `/categories/GetAll`;
+            axios.get(url).then((response) => {
+                this.categoryData = response.data.data;
+                console.log(this.categoryData);
+            }).catch((error) => {
+                console.log(error.response);
+            })
+        },
+        onSearchClick() {
+            this.$emit('search', this.searchKeyword);
+        },
+        logout() {
+            localStorage.removeItem('username');
+            this.username = '';
+            localStorage.removeItem('customerToken');
+            this.$router.push('/');
+        }
     },
     mounted() {
-
+        this.loadCategoryData();
+        this.username = localStorage.getItem('username');
     }
 }
 </script>

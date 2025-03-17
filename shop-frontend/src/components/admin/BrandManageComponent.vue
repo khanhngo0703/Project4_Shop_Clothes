@@ -51,16 +51,38 @@
                                         {{ b.name }}
                                     </td>
                                     <td class="py-2 px-4 border-b border-gray-200">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2" @click="openUpdateModal(b)">
+                                        <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                                            @click="openUpdateModal(b)">
                                             Update
                                         </button>
-                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded" @click="onDeleteClick(b)">
+                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded"
+                                            @click="onDeleteClick(b)">
                                             Delete
                                         </button>
                                     </td>
-                                </tr>                                
+                                </tr>
                             </tbody>
                         </table>
+                        <div class="mt-6 flex justify-center items-center space-x-2">
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="previousPage">
+                                « Previous
+                            </button>
+
+                            <div v-for="page in Math.ceil(totalItems / pageSize)" :key="page">
+                                <button
+                                    class="px-4 py-2 mx-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white"
+                                    @click="changePage(page)">
+                                    {{ page }}
+                                </button>
+                            </div>
+
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="nextPage">
+                                Next »
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -96,7 +118,7 @@ export default {
         return {
             brandData: [],
             searchKeyword: '',
-            pageSize: 10,
+            pageSize: 3,
             currentPage: 1,
             totalPages: 0,
             totalItems: 0,
@@ -163,18 +185,18 @@ export default {
         },
         changePage(page) {
             this.currentPage = page;
-            this.loadCategoryData();
+            this.loadBrandData();
         },
         previousPage() {
             if (this.currentPage > 1) {
                 this.currentPage--;
-                this.loadCategoryData();
+                this.loadBrandData();
             }
         },
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
-                this.loadCategoryData();
+                this.loadBrandData();
             }
         },
         openUpdateModal(brand) {

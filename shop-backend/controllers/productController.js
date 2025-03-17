@@ -49,6 +49,25 @@ export const getProductById = async (req, res) => {
     return res.status(200).json({ message: "Lấy thông tin sản phẩm thành công", data: product });
 };
 
+export const getProductByCategoryId = async (req, res) => {
+    const { categoryId } = req.params;
+    try {
+        const products = await db.Product.findAll({
+            where: { category_id: categoryId }  // Giả sử category_id là khóa ngoại trong bảng Product
+        });
+
+        if (products.length === 0) {
+            return res.status(404).json({ message: "Không tìm thấy sản phẩm nào cho danh mục này" });
+        }
+
+        return res.status(200).json({ message: "Lấy danh sách sản phẩm theo danh mục thành công", data: products });
+    } catch (error) {
+        console.error("Lỗi khi lấy sản phẩm theo danh mục:", error);
+        return res.status(500).json({ message: "Lỗi server", error: error.message });
+    }
+};
+
+
 export const insertProduct = async (req, res) => {
     const product = await db.Product.create(req.body);
     return res.status(201).json({ message: "Thêm sản phẩm thành công", data: product });

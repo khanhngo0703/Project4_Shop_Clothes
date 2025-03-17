@@ -1,5 +1,5 @@
 <template>
-    <HeaderComponents />
+    <HeaderComponents @search="handleSearch" />
     <div class="container mx-auto px-4 py-6">
         <div class="flex items-center text-sm text-gray-600 mb-4">
             <a class="hover:text-orange-500" href="#">
@@ -9,196 +9,88 @@
                 /
             </span>
             <span class="text-orange-500">
-                Phụ kiện
+                {{ category ? category.name : 'Đang tải...' }}
             </span>
         </div>
         <div class="flex">
             <!-- Sidebar -->
             <div class="w-1/4 pr-4">
                 <div class="mb-6">
-                    <h2 class="text-lg font-bold text-orange-500 mb-2">
-                        DANH MỤC SẢN PHẨM
-                    </h2>
-                    <ul class="space-y-2">
-                        <li>
-                            <button class="w-full text-left">
-                                Hàng mới về
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Bộ sưu tập thu đông 2019
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Thời trang nam
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Thời trang nữ
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Thời trang công sở
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Phụ kiện nam
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Phụ kiện nữ
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Giày da công sở
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Áo phông
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Áo sơ mi
-                            </button>
-                        </li>
-                        <li>
-                            <button class="w-full text-left">
-                                Áo len
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h2 class="text-lg font-bold text-orange-500 mb-2">
-                        TÌM KIẾM THEO GIÁ
-                    </h2>
-                    <ul class="space-y-2">
-                        <li>
-                            <label class="flex items-center">
-                                <input class="mr-2" type="checkbox" />
-                                Giá dưới 100.000đ
-                            </label>
-                        </li>
-                        <li>
-                            <label class="flex items-center">
-                                <input class="mr-2" type="checkbox" />
-                                100.000đ - 200.000đ
-                            </label>
-                        </li>
-                        <li>
-                            <label class="flex items-center">
-                                <input class="mr-2" type="checkbox" />
-                                200.000đ - 300.000đ
-                            </label>
-                        </li>
-                        <li>
-                            <label class="flex items-center">
-                                <input class="mr-2" type="checkbox" />
-                                300.000đ - 500.000đ
-                            </label>
-                        </li>
-                        <li>
-                            <label class="flex items-center">
-                                <input class="mr-2" type="checkbox" />
-                                500.000đ - 1.000.000đ
-                            </label>
-                        </li>
-                    </ul>
+                    <aside class="w-1/1">
+                        <!-- Tiêu đề -->
+                        <h2 class="bg-orange-600 text-white text-lg font-bold py-2 px-4">
+                            DANH MỤC SẢN PHẨM
+                        </h2>
+                        <!-- Danh sách danh mục -->
+                        <ul class="border border-gray-300">
+                            <li v-for="c in categoryData.slice(0, 8)" :key="c.id"
+                                class="border-b border-gray-300 py-2 px-4 hover:bg-orange-500 hover:text-white transition duration-300">
+                                <router-link :to="{ name: 'CategoryDetailView', params: { categoryId: c.id } }"
+                                    class="block w-full">
+                                    {{ c.name }}
+                                </router-link>
+                            </li>
+                        </ul>
+                    </aside>
                 </div>
             </div>
             <!-- Main Content -->
             <div class="w-3/4">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-gray-800">
-                        PHỤ KIỆN
-                    </h2>
-                    <div class="flex items-center">
-                        <span class="mr-2">
-                            Sắp xếp theo
-                        </span>
-                        <select class="border border-gray-300 rounded px-2 py-1">
-                            <option>
-                                Thứ tự
-                            </option>
-                        </select>
-                    </div>
-                </div>
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="text-center">
-                        <img alt="Khăn choàng thời trang" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/803bF4tKeWD8t37nVdSm-iL2OrY84KSeMyzab2bBQs8.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Khăn choàng thời trang
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            450.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Kính râm phốt gọng nhựa màu đồi mồi" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/ryi0hG2IdDZWaiMYLhSN768U-bbOCLEFKE7BPrutq38.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Kính râm phốt gọng nhựa màu đồi mồi
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            150.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Mũ lưỡi trai xanh lam 9FORTY" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/rP9WIowC_i06P50xxnCkScpJHotx3Ql2g5f1CLbY25Q.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Mũ lưỡi trai xanh lam 9FORTY
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            230.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Đồng hồ cao cấp dây da" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/gbZy0dzjSml211VzH1rN3RVY4iQXl-lHTVSy5vN65OI.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Đồng hồ cao cấp dây da
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            450.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Dây đeo hoa xanh ngọc" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/ynRnAoUy9btY5bXuuFFjAH6WhQCUdTb_rOsnTl3v4jo.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Dây đeo hoa xanh ngọc
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            150.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Vòng cổ thời trang" height="300"
-                            src="https://storage.googleapis.com/a1aa/image/GkhVVd138O96bSok-SOdmBI7j6abJBkNI8qiUMJ7WH4.jpg"
-                            width="300" />
-                        <p class="mt-2">
-                            Vòng cổ thời trang
-                        </p>
-                        <p class="text-orange-500 font-bold">
-                            230.000 đ
-                        </p>
-                    </div>
+                    <template v-if="searchKeyword == '' || !searchKeyword">
+                        <div v-for="p in paginatedData" :key="p.id" class="text-center">
+                            <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }">
+                                <img :src="p.image" alt="">
+                            </router-link>
+                            <p class="mt-2">
+                                {{ p.name }}
+                            </p>
+                            <p class="text-orange-500 font-bold">
+                                {{ p.formattedPrice }}
+                            </p>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <template v-if="paginatedData.length > 0">
+                            <div v-for="p in paginatedData" :key="p.id" class="text-center">
+                                <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }">
+                                    <img :src="p.image" alt="">
+                                </router-link>
+                                <p class="mt-2">
+                                    {{ p.name }}
+                                </p>
+                                <p class="text-orange-500 font-bold">
+                                    {{ p.formattedPrice }}
+                                </p>
+                            </div>
+                        </template>
+                    </template>
+
+
+                </div>
+                <div class="flex items-center justify-center space-x-2 mt-4">
+                    <!-- Nút Previous -->
+                    <button @click="previousPage"
+                        class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                        <i class="fa fa-angle-left"></i>
+                    </button>
+
+                    <!-- Danh sách số trang -->
+                    <ul class="flex space-x-2">
+                        <li v-for="page in totalPages" :key="page">
+                            <button @click="changePage(page)"
+                                class="px-3 py-2 border border-gray-300 rounded-md hover:bg-blue-500 hover:text-white transition"
+                                :class="{ 'bg-blue-500 text-white': currentPage === page }">
+                                {{ page }}
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Nút Next -->
+                    <button @click="nextPage"
+                        class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                        <i class="fa fa-angle-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -206,6 +98,9 @@
     <FooterComponents />
 </template>
 <script>
+
+import axios from 'axios';
+
 import HeaderComponents from './HeaderComponent.vue';
 import FooterComponents from './FooterComponents.vue';
 
@@ -215,6 +110,96 @@ export default {
     name: 'CategoryDetailComponent',
     components: {
         HeaderComponents, FooterComponents
+    },
+    data() {
+        return {
+            products: [],
+            categoryData: [],
+            searchKeyword: '',
+            pageSize: 6,
+            currentPage: 1,
+            totalPages: 0,
+            totalItems: 0
+        }
+    },
+    computed: {
+        filteredProductData() {
+            if (this.searchKeyword) {
+                return this.products.filter(product => product.name.includes(this.searchKeyword));
+            } else {
+                return this.products;
+            }
+        },
+        paginatedData() {
+            const startIndex = (this.currentPage - 1) * this.pageSize;
+            const endIndex = startIndex + this.pageSize;
+            // return this.filteredProductData.slice(startIndex, endIndex);
+            return this.filteredProductData.slice(startIndex, endIndex).map(product => ({
+                ...product,
+                formattedPrice: new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(product.price)
+            }));
+        },
+        totalPages() {
+            return Math.ceil(this.filteredProductData.length / this.pageSize);
+        },
+        category() {
+            return this.categoryData.find(c => c.id == this.$route.params.categoryId) || {};
+        }
+    },
+    methods: {
+        loadProducts() {
+            const categoryId = this.$route.params.categoryId;
+            var url = import.meta.env.VITE_APP_BASE_API_URL + `/products/GetByCategory/${categoryId}`;
+            axios.get(url)
+                .then(response => {
+                    this.products = response.data.data;
+                    this.totalItems = this.products.length;
+                    this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+                })
+                .catch(error => {
+                    console.error('Error loading products:', error);
+                });
+        },
+        loadCategoryData() {
+            var url = import.meta.env.VITE_APP_BASE_API_URL + `/categories/GetAll`;
+            axios.get(url).then((response) => {
+                this.categoryData = response.data.data;
+                console.log(this.categoryData);
+            }).catch((error) => {
+                console.log(error.response);
+            })
+        },
+        changePage(page) {
+            this.currentPage = page;
+        },
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        handleSearch(keyword) {
+            this.searchKeyword = keyword;
+            this.currentPage = 1; // Reset to the first page when a new search is performed
+        }
+    },
+    mounted() {
+        this.loadProducts();
+        this.loadCategoryData();
+    },
+    watch: {
+        '$route'(to, from) {
+            if (to.params.categoryId !== from.params.categoryId) {
+                this.loadProducts();
+            }
+        }
     }
 }
 </script>

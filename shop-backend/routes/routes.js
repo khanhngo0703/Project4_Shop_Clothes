@@ -32,6 +32,9 @@ router.post('/products/Create', ProductController.insertProduct);
 router.put('/products/Update', ProductController.updateProduct);
 router.delete('/products/Delete/:id', ProductController.deleteProduct);
 
+router.get('/products/GetByCategory/:categoryId', ProductController.getProductByCategoryId);
+
+
 // Routes cho Orders
 router.get('/orders/GetAll', OrderController.getOrders);
 router.get('/orders/GetById/:id', OrderController.getOrderById);

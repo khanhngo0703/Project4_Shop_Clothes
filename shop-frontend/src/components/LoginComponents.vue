@@ -17,14 +17,14 @@
                     <i class="fab fa-google"></i> Google
                 </button>
             </div>
-            <form>
+            <form @submit.prevent="login">
                 <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium mb-1">Email *</label>
-                    <input type="email" id="email" class="w-full border border-gray-300 p-2 rounded" required>
+                    <label for="email" class="block text-sm font-medium mb-1">Tài khoản *</label>
+                    <input type="text" id="username" class="w-full border border-gray-300 p-2 rounded"  v-model="loginForm.name" required>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium mb-1">Mật khẩu *</label>
-                    <input type="password" id="password" class="w-full border border-gray-300 p-2 rounded" required>
+                    <input type="password" id="password" class="w-full border border-gray-300 p-2 rounded" v-model="loginForm.password" required>
                 </div>
                 <div class="flex items-center justify-between mb-4">
                     <button type="submit" class="bg-gray-200 text-gray-800 py-2 px-4 rounded">Đăng nhập</button>
@@ -32,26 +32,76 @@
                 </div>
                 <a href="#" class="text-gray-500">Đăng ký</a>
             </form>
+            <p v-if="error" class="text-red-500 text-sm mt-2">{{ error }}</p>
         </div>
     </div>
     <FooterComponents />
 
 </template>
 <script>
+import axios from 'axios';
+
 import HeaderComponents from './HeaderComponent.vue';
 import FooterComponents from './FooterComponents.vue';
 
 export default {
     name: 'LoginComponents',
+    props: {
+        msg: String
+    },
     components: {
         HeaderComponents,
         FooterComponents
     },
-    mounted() {
-        
+    data() {
+        return {
+            loginForm: {
+                name: '',
+                password: ''
+            },
+            error: '' // Thêm biến error để lưu thông báo lỗi
+        }
     },
     methods: {
-        
+        async login() {
+            if (!this.loginForm.name || !this.loginForm.password) {
+                this.error = 'Username and password are required!';
+                return;
+            }
+
+            try {
+                var url = import.meta.env.VITE_APP_BASE_API_URL + `/login`
+                const response = await axios.post(url, {
+                    name: this.loginForm.name,
+                    password: this.loginForm.password
+                });
+
+                console.log(this.loginForm.name);
+
+                if (response.status === 200) {
+                    const data = response.data;
+                    // localStorage.setItem('token', data.token);
+                    localStorage.setItem('customerToken', data.token);
+                    // Lưu username vào localStorage
+                    localStorage.setItem('username', this.loginForm.name);
+                    console.log(data.username);
+
+                    console.log(data.token);
+
+                    console.log('Đăng nhập thành công:', data);
+                    this.$router.push('/').then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    this.error = response.data.message || 'Sai tên đăng nhập hoặc mật khẩu!';
+                }
+            } catch (error) {
+                console.error('Đã xảy ra lỗi khi đăng nhập:', error);
+                this.error = error.response?.data.message || 'Sai tên đăng nhập hoặc mật khẩu!';
+            }
+        }
+    },
+    mounted() {
     }
 }
 </script>

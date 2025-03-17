@@ -42,12 +42,12 @@ const routes = [
         component: Cart,
     },
     {
-        path: '/product-detail',
-        name: 'ProductDetaillView',
+        path: '/product-detail/:id',
+        name: 'ProductDetailView',
         component: ProductDetail,
     },
     {
-        path: '/category-detail',
+        path: '/category-detail/:categoryId',
         name: 'CategoryDetailView',
         component: CategoryDetail,
     },

@@ -63,6 +63,26 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-6 flex justify-center items-center space-x-2">
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="previousPage">
+                                « Previous
+                            </button>
+
+                            <div v-for="page in Math.ceil(totalItems / pageSize)" :key="page">
+                                <button
+                                    class="px-4 py-2 mx-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white"
+                                    @click="changePage(page)">
+                                    {{ page }}
+                                </button>
+                            </div>
+
+                            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                                @click="nextPage">
+                                Next »
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -98,7 +118,7 @@ export default {
         return {
             categoryData: [],
             searchKeyword: '',
-            pageSize: 10,
+            pageSize: 3,
             currentPage: 1,
             totalPages: 0,
             totalItems: 0,
