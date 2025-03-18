@@ -10,6 +10,7 @@ import Category from "./category.js";
 import Brand from "./brand.js";
 import Product from "./product.js";
 import Feedback from "./feedback.js";
+import Customer from "./customer.js";
 import Order from "./order.js";
 import OrderDetail from "./orderdetail.js";
 
@@ -19,6 +20,7 @@ db.Category = Category(sequelize, Sequelize.DataTypes);
 db.Brand = Brand(sequelize, Sequelize.DataTypes);
 db.Product = Product(sequelize, Sequelize.DataTypes);
 db.Feedback = Feedback(sequelize, Sequelize.DataTypes);
+db.Customer = Customer(sequelize, Sequelize.DataTypes);
 db.Order = Order(sequelize, Sequelize.DataTypes);
 db.OrderDetail = OrderDetail(sequelize, Sequelize.DataTypes);
 

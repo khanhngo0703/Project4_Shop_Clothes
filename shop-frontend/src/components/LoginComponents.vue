@@ -20,11 +20,13 @@
             <form @submit.prevent="login">
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium mb-1">Tài khoản *</label>
-                    <input type="text" id="username" class="w-full border border-gray-300 p-2 rounded"  v-model="loginForm.name" required>
+                    <input type="text" id="username" class="w-full border border-gray-300 p-2 rounded"
+                        v-model="loginForm.name" required>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium mb-1">Mật khẩu *</label>
-                    <input type="password" id="password" class="w-full border border-gray-300 p-2 rounded" v-model="loginForm.password" required>
+                    <input type="password" id="password" class="w-full border border-gray-300 p-2 rounded"
+                        v-model="loginForm.password" required>
                 </div>
                 <div class="flex items-center justify-between mb-4">
                     <button type="submit" class="bg-gray-200 text-gray-800 py-2 px-4 rounded">Đăng nhập</button>
@@ -40,6 +42,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 import HeaderComponents from './HeaderComponent.vue';
 import FooterComponents from './FooterComponents.vue';
@@ -80,12 +83,20 @@ export default {
 
                 if (response.status === 200) {
                     const data = response.data;
+                    const token = response.data.token;
+                    // Giải mã token để lấy userId
+                    const decodedToken = jwtDecode(token);
+                    const userId = decodedToken.id;
+
+                    console.log(decodedToken);
                     // localStorage.setItem('token', data.token);
                     localStorage.setItem('customerToken', data.token);
                     // Lưu username vào localStorage
                     localStorage.setItem('username', this.loginForm.name);
                     console.log(data.username);
-
+                    if (userId) {
+                        localStorage.setItem('userId', userId);
+                    }
                     console.log(data.token);
 
                     console.log('Đăng nhập thành công:', data);
@@ -102,6 +113,11 @@ export default {
         }
     },
     mounted() {
+        const token = localStorage.getItem('customerToken');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            console.log('Token đã giải mã:', decodedToken);
+        }
     }
 }
 </script>

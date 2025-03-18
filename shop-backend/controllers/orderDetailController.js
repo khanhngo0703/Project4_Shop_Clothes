@@ -32,3 +32,35 @@ export const deleteOrderDetail = async (req, res) => {
     await db.OrderDetail.destroy({ where: { id } });
     return res.status(200).json({ message: "Xoá chi tiết đơn hàng thành công" });
 };
+
+export const getOrderDetailsByOrderId = async (req, res) => {
+    const { orderId } = req.params; // Lấy orderId từ URL
+
+    try {
+        // Lấy thông tin chi tiết đơn hàng kèm thông tin sản phẩm
+        const orderDetails = await db.OrderDetail.findAll({
+            where: { order_id: orderId }, // Lọc theo orderId
+            include: [
+                {
+                    model: db.Product, // Join với bảng products
+                    as: "product" // Đảm bảo alias khớp với định nghĩa trong model
+                }
+            ]
+        });
+
+        // Kiểm tra nếu không có chi tiết đơn hàng nào
+        if (!orderDetails || orderDetails.length === 0) {
+            return res.status(404).json({ message: "Không tìm thấy chi tiết đơn hàng" });
+        }
+
+        // Trả về thông tin chi tiết đơn hàng
+        return res.status(200).json({
+            message: "Lấy thông tin chi tiết đơn hàng thành công",
+            data: orderDetails
+        });
+
+    } catch (error) {
+        console.error("Lỗi khi lấy thông tin chi tiết đơn hàng:", error);
+        return res.status(500).json({ message: "Lỗi server", error: error.message });
+    }
+};

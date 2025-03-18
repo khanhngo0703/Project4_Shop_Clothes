@@ -2,7 +2,7 @@
   "development": {
     "username": "sa",
     "password": "123",
-    "database": "shop_Online",
+    "database": "DB_ShopOnline",
     "host": "localhost",
     "dialect": "mssql"
   },

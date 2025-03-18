@@ -10,8 +10,11 @@ import Payment from './view/PaymentView.vue';
 import Showtimes from './view/ShowtimesView.vue';
 import DashboardView from './view/admin/DashboardView.vue';
 import CategoryManageView from './view/admin/CategoryManageView.vue';
+import CustomerManageView from './view/admin/CustomerManageView.vue';
 import BrandManageView from './view/admin/BrandManageView.vue';
 import ProductManageView from './view/admin/ProductManageView.vue';
+import OrderManageView from './view/admin/OrderManageView.vue';
+import OrderDetailManageView from './view/admin/OrderDetailManageView.vue';
 import CreateProductView from './view/admin/CreateProductView.vue';
 import CreateCategoryView from './view/admin/CreateCategoryView.vue';
 import CreateBrandView from './view/admin/CreateBrandView.vue';
@@ -79,6 +82,12 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
+        path: '/admin/customermanage',
+        name: 'CustomerManageView',
+        component: CustomerManageView,
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/admin/brandmanage',
         name: 'BrandManageView',
         component: BrandManageView,
@@ -88,6 +97,19 @@ const routes = [
         path: '/admin/productmanage',
         name: 'ProductManageView',
         component: ProductManageView,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/admin/ordermanage',
+        name: 'OrderManageView',
+        component: OrderManageView,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/admin/orderdetailsmanage/:id',
+        name: 'OrderDetailManageView',
+        component: OrderDetailManageView,
+        props: true,
         meta: { requiresAuth: true }
     },
     {

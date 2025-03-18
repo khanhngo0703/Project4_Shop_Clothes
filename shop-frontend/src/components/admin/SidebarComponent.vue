@@ -46,6 +46,13 @@
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
+                    <router-link to="/admin/customermanage" class="text">Customer Manage</router-link>
+                </span>
+            </a>
+            <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
+                <i class="fas fa-circle w-6">
+                </i>
+                <span class="ml-4">
                     User Manage
                 </span>
             </a>
@@ -60,7 +67,7 @@
                 <i class="fas fa-circle w-6">
                 </i>
                 <span class="ml-4">
-                    Order Manage
+                    <router-link to="/admin/ordermanage" class="text">Order Manage</router-link>
                 </span>
             </a>
             <a class="flex items-center p-4 text-red-600 hover:bg-gray-200" href="#" @click="logout">

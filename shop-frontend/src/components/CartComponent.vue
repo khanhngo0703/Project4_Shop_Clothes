@@ -77,9 +77,9 @@
             </div>
         </div>
         <div class="flex justify-between items-center mt-6">
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300">
-                TIẾP TỤC MUA HÀNG
-            </button>
+            <router-link to="/"><a class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300">
+                    TIẾP TỤC MUA HÀNG
+                </a></router-link>
             <div class="text-right">
                 <div class="text-lg font-semibold">
                     Tổng tiền thanh toán
@@ -90,9 +90,9 @@
             </div>
         </div>
         <div class="mt-4 text-right">
-            <button class="px-6 py-3 bg-orange-500 text-white font-semibold hover:bg-orange-600">
-                TIẾN HÀNH THANH TOÁN
-            </button>
+            <router-link to="/payment"><a class="px-6 py-3 bg-orange-500 text-white font-semibold hover:bg-orange-600">
+                    TIẾN HÀNH THANH TOÁN
+                </a></router-link>
         </div>
     </div>
     <FooterComponents />
@@ -215,7 +215,7 @@ export default {
             } else {
                 try {
                     // Gửi thông tin khách hàng lên server
-                    const customerUrl = process.env.VUE_APP_BASE_API_URL + "/Customers/Create";
+                    const customerUrl = import.meta.env.VITE_APP_BASE_API_URL + "/Customers/Create";
                     const customerResponse = await axios.post(customerUrl, this.currentCustomers);
                     const customerId = customerResponse.data.id;
 

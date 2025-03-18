@@ -7,6 +7,7 @@ import * as OrderDetailController from '../controllers/orderDetailController.js'
 import * as FeedbackController from '../controllers/feedbackController.js';
 import * as BrandController from '../controllers/brandController.js';
 import * as AuthController from '../controllers/authController.js';
+import * as CustomerController from '../controllers/customerController.js';
 import { uploadMiddleware, uploadImage } from '../controllers/productController.js';
 
 const router = express.Router();
@@ -34,11 +35,20 @@ router.delete('/products/Delete/:id', ProductController.deleteProduct);
 
 router.get('/products/GetByCategory/:categoryId', ProductController.getProductByCategoryId);
 
+// Routes cho Customers
+router.get('/customers/GetAll', CustomerController.getCustomers);
+router.get('/customers/GetById/:id', CustomerController.getCustomerById);
+router.post('/customers/Create', CustomerController.insertCustomer);
+router.put('/customers/Update/:id', CustomerController.updateCustomer);
+router.delete('/customers/Delete/:id', CustomerController.deleteCustomer);
+
 
 // Routes cho Orders
 router.get('/orders/GetAll', OrderController.getOrders);
 router.get('/orders/GetById/:id', OrderController.getOrderById);
 router.post('/orders/Create', OrderController.insertOrder);
+router.post('/orders/CreateFullDetail', OrderController.insertFullDetailOrder);
+router.get('/orders/GetOrder', OrderController.getOrderWithCustomer);
 router.put('/orders/Update/:id', OrderController.updateOrder);
 router.delete('/orders/Delete/:id', OrderController.deleteOrder);
 
@@ -48,6 +58,7 @@ router.get('/order-details/GetById/:id', OrderDetailController.getOrderDetailByI
 router.post('/order-details/Create', OrderDetailController.insertOrderDetail);
 router.put('/order-details/Update/:id', OrderDetailController.updateOrderDetail);
 router.delete('/order-details/Delete/:id', OrderDetailController.deleteOrderDetail);
+router.get('/orders-details/details/:orderId', OrderDetailController.getOrderDetailsByOrderId);
 
 // Routes cho Feedbacks
 router.get('/feedbacks/GetAll', FeedbackController.getFeedbacks);
