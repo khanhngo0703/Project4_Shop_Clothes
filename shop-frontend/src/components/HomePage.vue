@@ -70,9 +70,9 @@
                     <template v-if="searchKeyword == '' || !searchKeyword">
                         <div v-for="p in paginatedData" :key="p.id" class="relative">
                             <!-- <img :src="p.image" alt=""> -->
-                            <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }">
-                                <img :src="p.image" alt="">
-                            </router-link>
+                            <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }" class="block aspect-square overflow-hidden rounded-lg bg-gray-100">
+                                    <img :src="p.image" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                                </router-link>
                             <div class="mt-4 text-center">
                                 <p class="text-gray-600 font-semibold">{{ p.name }}</p>
                                 <p class="text-orange-500 font-bold">
@@ -86,8 +86,8 @@
                         <template v-if="paginatedData.length > 0">
                             <div v-for="p in paginatedData" :key="p.id" class="relative">
                                 <!-- <img :src="p.image" alt=""> -->
-                                <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }">
-                                    <img :src="p.image" alt="">
+                                <router-link :to="{ name: 'ProductDetailView', params: { id: p.id } }" class="w-48 aspect-square flex items-center justify-center bg-gray-100 rounded overflow-hidden">
+                                    <img :src="p.image" alt="" class="w-full h-full object-cover">
                                 </router-link>
                                 <div class="mt-4 text-center">
                                     <p class="text-gray-600 font-semibold">{{ p.name }}</p>
@@ -126,233 +126,6 @@
                     </button>
                 </div>
 
-            </div>
-            <div class="container mx-auto px-4 py-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-2xl font-bold text-orange-600">
-                        DANH MỤC SẢN PHẨM
-                    </h1>
-                    <div>
-                        <button class="border border-orange-600 text-orange-600 px-4 py-2 mr-2">
-                            Nam
-                        </button>
-                        <button class="border border-orange-600 text-orange-600 px-4 py-2">
-                            Nữ
-                        </button>
-                    </div>
-                </div>
-                <p class="mb-4">
-                    Các sản phẩm thời trang nam, nữ phù hợp với nhiều lứa tuổi
-                </p>
-                <div class="mb-8">
-                    <img alt="Promotional banner with a woman in a colorful dress and a woman in a hat, with text 'Nhập mã giảm giá Autumn 100 Giảm ngay 100K'"
-                        class="w-full" height="300"
-                        src="https://bizweb.dktcdn.net/100/311/013/themes/802137/assets/collection_tab.jpg?1718007850853"
-                        width="1200" />
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div class="text-center">
-                        <img alt="Man wearing a striped sweater" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/QZfYDLkatltdA7uw5u4LJe78CuIjP_RSmbOrUMal2xE.jpg"
-                            width="300" />
-                        <p>
-                            Áo len cộc kẻ ngang
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            200.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a blue jacket" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/ijJljXKkwJMzX_PnHNyHPpBX7eI0g9wd_-UoL7iDp8E.jpg"
-                            width="300" />
-                        <p>
-                            Áo khoác xanh lam
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            670.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center relative">
-                        <img alt="Man wearing a gray jacket" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/G6sKT2dgxc2QZCx-f-UX14pq1b17FKw-BSefYocHCiI.jpg"
-                            width="300" />
-                        <div class="absolute top-2 right-2">
-                            <i class="fas fa-search text-orange-600">
-                            </i>
-                        </div>
-                        <p>
-                            Áo khoác xám
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            180.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a blue Lacoste sweater" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/7i-Oc9LFHm_dv1DRXaAdv3_1NnVavpX5eUe8sx7YZL4.jpg"
-                            width="300" />
-                        <p>
-                            Áo Phone Lacoste
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            220.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a gray sweater and a blue cap" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/Zp2yMXD8olWnKNAkOjAQdFamZ0SXGdRAVkZrTevSVOE.jpg"
-                            width="300" />
-                        <p>
-                            Áo len nam màu ghi
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            350.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a green hoodie with a pumpkin face" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/IbLGDsvbj_azFaavuLVFnlVZpiZ_r27cKBGXn-LuXtQ.jpg"
-                            width="300" />
-                        <p>
-                            Áo gió xanh lá
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            870.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a pink t-shirt and a blue shirt" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/Y8h6a1EEdZJ4lAkPsQSzdWBOAojP9TJ_11BlpKFtaYo.jpg"
-                            width="300" />
-                        <p>
-                            Áo phông cộc hồng
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            240.000 đ
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <img alt="Man wearing a blue sweater and a white shirt" class="w-full mb-2" height="400"
-                            src="https://storage.googleapis.com/a1aa/image/4GcUqCHKnaNr8Dxvkh3lrYuhcJrmkwo2AdlbN5zYlYk.jpg"
-                            width="300" />
-                        <p>
-                            Áo dạ xanh lam
-                        </p>
-                        <p class="text-orange-600 font-bold">
-                            520.000 đ
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center mt-8">
-                    <button class="border border-gray-800 text-gray-800 px-4 py-2">
-                        + XEM THÊM
-                    </button>
-                </div>
-            </div>
-            <div class="container mx-auto p-4">
-                <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-2xl font-bold text-gray-800">PHỤ KIỆN</h1>
-                    <button
-                        class="border border-orange-500 text-orange-500 px-4 py-2 hover:bg-orange-500 hover:text-white transition">XEM
-                        THÊM</button>
-                </div>
-                <p class="text-gray-600 mb-6">Các loại phụ kiện đi cùng với
-                    những trang phục của bạn</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="relative col-span-1 md:col-span-1">
-                        <img alt="Sale off 50% tất cả phụ kiện" class="w-full h-auto" height="400"
-                            src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                            width="400" />
-                        <div
-                            class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                            <div class="text-center text-white">
-                                <p class="text-2xl font-bold">SALE OFF</p>
-                                <p class="text-5xl font-bold">50%</p>
-                                <p class="text-lg">tất cả phụ kiện</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <img alt="Khăn choàng thời trang" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Khăn choàng thời
-                                    trang</p>
-                                <p class="text-orange-500 font-bold">450.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <img alt="Kính râm phớt gọng nhựa màu da báo" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Kính râm phớt gọng nhựa
-                                    màu da báo</p>
-                                <p class="text-orange-500 font-bold">150.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <img alt="Mũi lưỡi trai xanh lam 9FORTY" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Mũi lưỡi trai xanh lam
-                                    9FORTY</p>
-                                <p class="text-orange-500 font-bold">230.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <img alt="Đồng hồ cao cấp dây da" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Đồng hồ cao cấp dây
-                                    da</p>
-                                <p class="text-orange-500 font-bold">1.200.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <img alt="Dây đeo hoa xanh ngọc" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Dây đeo hoa xanh
-                                    ngọc</p>
-                                <p class="text-orange-500 font-bold">120.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <img alt="Vòng cổ thời trang" class="w-24 h-24 object-cover" height="100"
-                                src="https://bizweb.dktcdn.net/thumb/grande/100/311/013/products/16.jpg?v=1559575806330"
-                                width="100" />
-                            <div class="ml-4">
-                                <p class="text-gray-800">Vòng cổ thời trang</p>
-                                <p class="text-orange-500 font-bold">450.000
-                                    đ</p>
-                                <a class="text-blue-500" href="#">Xem chi
-                                    tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="container mx-auto px-4 py-8">
                 <div class="flex justify-between items-center mb-6">

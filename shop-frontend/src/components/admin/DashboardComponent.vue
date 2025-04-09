@@ -62,9 +62,7 @@
                                 22 March, 2023
                             </span>
                         </div>
-                        <h3 class="text-lg font-bold mb-2">
-                            Super awesome, Vue 3 is there, Lets do this!
-                        </h3>
+                        
                         <div class="flex space-x-2 mb-4">
                             <span class="bg-blue-200 text-blue-800 text-xs font-semibold px-2 py-1 rounded">
                                 Medium

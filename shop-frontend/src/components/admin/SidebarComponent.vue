@@ -48,21 +48,7 @@
                 <span class="ml-4">
                     <router-link to="/admin/customermanage" class="text">Customer Manage</router-link>
                 </span>
-            </a>
-            <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
-                <i class="fas fa-circle w-6">
-                </i>
-                <span class="ml-4">
-                    User Manage
-                </span>
-            </a>
-            <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
-                <i class="fas fa-circle w-6">
-                </i>
-                <span class="ml-4">
-                    FeedBack Manage
-                </span>
-            </a>
+            </a>            
             <a class="flex items-center p-4 text-gray-700 hover:bg-gray-200" href="#">
                 <i class="fas fa-circle w-6">
                 </i>
